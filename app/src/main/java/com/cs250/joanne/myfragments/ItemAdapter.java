@@ -37,9 +37,13 @@ public class ItemAdapter extends ArrayAdapter<Item> {
             itemView = (LinearLayout) convertView;
         }
 
-        TextView whatView = (TextView) itemView.findViewById(R.id.detail);
+        TextView nameView = (TextView) itemView.findViewById(R.id.detail);
+        TextView categoryView = (TextView) itemView.findViewById(R.id.category);
+        TextView dateView = (TextView) itemView.findViewById(R.id.date);
 
-        whatView.setText(it.getWhat());
+        nameView.setText(it.getName());
+        categoryView.setText(it.getCategory());
+        dateView.setText(it.getDate());
 
 
         return itemView;

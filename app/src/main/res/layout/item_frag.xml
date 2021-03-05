@@ -18,22 +18,39 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="20dp"
-        android:layout_marginLeft="53dp"
-        android:layout_marginTop="209dp"
+        android:layout_marginLeft="26dp"
+        android:layout_marginTop="68dp"
         android:text="enter item"
         android:textColor="#2a37c2"
         android:textSize="@dimen/abc_text_size_large_material"
         android:textStyle="bold" />
 
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/category_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="143dp"
+        android:layout_marginTop="161dp" />
+
+    <Button
+        android:id="@+id/date_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="showDatePickerDialog"
+        />
+
     <Button
         android:id="@+id/add_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="234dp"
+        android:layout_marginBottom="50dp"
         android:layout_marginEnd="40dp"
-        android:layout_marginRight="56dp"
+        android:layout_marginRight="48dp"
         android:text="@string/add" />
 
 

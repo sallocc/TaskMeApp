@@ -9,4 +9,12 @@
 
     <string name="menu_editview">Edit</string>
     <string name="menu_delete">Delete</string>
+
+    <string-array name="category_array">
+        <item>Personal</item>
+        <item>Work</item>
+        <item>Fun</item>
+        <item>Errand</item>
+        <item>Miscellaneous</item>
+    </string-array>
 </resources>
