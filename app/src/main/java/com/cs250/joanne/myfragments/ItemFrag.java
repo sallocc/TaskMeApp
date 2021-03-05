@@ -49,6 +49,7 @@ public class ItemFrag extends Fragment {
         context = myact.getApplicationContext();
 
         tv = (EditText) view.findViewById(R.id.item_text);
+        category = (TextView) view.findViewById(R.id.category_text);
 
         categorySpinner = (Spinner) view.findViewById(R.id.category_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
