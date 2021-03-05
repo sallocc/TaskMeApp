@@ -14,4 +14,13 @@
         android:paddingRight="10dp">
     </TextView>
 
+    <TextView
+        android:id="@+id/resource"
+        android:layout_width="0dp"
+        android:layout_weight="25"
+        android:layout_height="match_parent"
+        android:textColor="@color/colorAccent"
+        android:textSize="16dp"
+        android:paddingRight="20dp"/>
+
 </LinearLayout>
