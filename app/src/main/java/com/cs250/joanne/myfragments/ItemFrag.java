@@ -21,6 +21,8 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.util.Calendar;
 
 import static android.widget.Toast.LENGTH_SHORT;
@@ -29,12 +31,12 @@ public class ItemFrag extends Fragment {
 
     private TextView tv;
     private Spinner categorySpinner;
-    private DatePicker datePicker;
 
     private TextView category;
-    private Calendar date;
+    private static TextView date;
 
     private Button btn;
+    private Button dateButton;
     private MainActivity myact;
     Context context;
 
@@ -50,6 +52,7 @@ public class ItemFrag extends Fragment {
 
         tv = (EditText) view.findViewById(R.id.item_text);
         category = (TextView) view.findViewById(R.id.category_text);
+        date = (TextView) view.findViewById(R.id.date_text);
 
         categorySpinner = (Spinner) view.findViewById(R.id.category_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
@@ -76,18 +79,22 @@ public class ItemFrag extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Item myitem = new Item(tv.getText().toString(), category.getText().toString(), date.toString());
+                Item myitem = new Item(tv.getText().toString(), category.getText().toString(), date.getText().toString());
                 myact.myItems.add(myitem);
                 Toast.makeText(getActivity().getApplicationContext(), "added item", LENGTH_SHORT).show();
             }
         });
 
-        return view;
-    }
+        dateButton = (Button) view.findViewById(R.id.date_button);
+        dateButton.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               DialogFragment newFragment = new DatePickerFragment();
+               newFragment.show(getFragmentManager(), "datePicker");
+           }
+        });
 
-    public void showDatePickerDialog(View v) {
-        DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(getFragmentManager(), "datePicker");
+        return view;
     }
 
     public static class DatePickerFragment extends DialogFragment
@@ -106,7 +113,7 @@ public class ItemFrag extends Fragment {
         }
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
-            // Do something with the date chosen by the user
+            date.setText((month + 1) + "/" + day + "/" + year);
         }
     }
 
