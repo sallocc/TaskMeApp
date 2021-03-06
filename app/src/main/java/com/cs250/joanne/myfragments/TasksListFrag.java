@@ -2,8 +2,6 @@ package com.cs250.joanne.myfragments;
 
 
 import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.util.Log;
@@ -19,35 +17,37 @@ import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
-import java.util.ArrayList;
 
-
-public class ListFrag extends Fragment {
+public class TasksListFrag extends Fragment {
 
     public static final int MENU_ITEM_EDITVIEW = Menu.FIRST;
     public static final int MENU_ITEM_DELETE = Menu.FIRST + 1;
 
     private ListView myList;
     private MainActivity myact;
-
+    private CurrentTaskAdapter adapter;
     Context cntx;
 
+    public TasksListFrag(CurrentTaskAdapter adapter) {
+        this.adapter = adapter;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View myview = inflater.inflate(R.layout.list_frag, container, false);
+        View myview = inflater.inflate(R.layout.taskslist_frag, container, false);
 
         cntx = getActivity().getApplicationContext();
 
         myact = (MainActivity) getActivity();
         myList = (ListView) myview.findViewById(R.id.mylist);
         // connect listview to the array adapter in MainActivity
-        myList.setAdapter(myact.aa);
+
+        myList.setAdapter(adapter);
         registerForContextMenu(myList);
         // refresh view
-        myact.aa.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();
 
         // program a short click on the list item
         myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -89,11 +89,11 @@ public class ListFrag extends Fragment {
                 return false;
             }
             case MENU_ITEM_DELETE: {
-                myact.myItems.remove(index);
+                myact.myCurrentTasks.remove(index);
                 Toast.makeText(cntx, "job " + index + " deleted",
                         Toast.LENGTH_SHORT).show();
                 // refresh view
-                myact.aa.notifyDataSetChanged();
+                myact.currentTaskAdapter.notifyDataSetChanged();
                 return true;
             }
         }

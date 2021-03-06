@@ -17,17 +17,16 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 
 import static android.widget.Toast.LENGTH_SHORT;
 
-public class ItemFrag extends Fragment {
+public class AddTasksFrag extends Fragment {
 
     private TextView tv;
     private Spinner categorySpinner;
@@ -45,7 +44,7 @@ public class ItemFrag extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.item_frag, container, false);
+        View view = inflater.inflate(R.layout.addtask_frag, container, false);
 
         myact = (MainActivity) getActivity();
         context = myact.getApplicationContext();
@@ -79,9 +78,15 @@ public class ItemFrag extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Item myitem = new Item(tv.getText().toString(), category.getText().toString(), date.getText().toString());
-                myact.myItems.add(myitem);
-                Toast.makeText(getActivity().getApplicationContext(), "added item", LENGTH_SHORT).show();
+                Task myTask = new Task(tv.getText().toString(), category.getText().toString(), date.getText().toString());
+                myact.myCurrentTasks.add(myTask);
+                Collections.sort(myact.myCurrentTasks, new Comparator<Task>() {
+                       @Override
+                       public int compare(Task lhs, Task rhs) {
+                           return lhs.getDateObject().compareTo(rhs.getDateObject());
+                       }
+                });
+                Toast.makeText(getActivity().getApplicationContext(), "added task", LENGTH_SHORT).show();
             }
         });
 

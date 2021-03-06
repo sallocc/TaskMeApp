@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Fragments">
+    <item android:title="Task Me">
         <menu>
             <item
-                android:id="@+id/item_frag"
-                android:title="Add Item" />
+                android:id="@+id/currenttasks_frag"
+                android:title="Current Tasks" />
             <item
-                android:id="@+id/list_frag"
-                android:title="Item List" />
+                android:id="@+id/completedtasks_frag"
+                android:title="Completed Tasks" />
             <item
                 android:id="@+id/nav_manage"
                 android:icon="@drawable/ic_menu_share"
