@@ -9,10 +9,13 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -33,10 +36,43 @@ public class MainActivity extends AppCompatActivity
     protected Toolbar toolbar;
     protected ArrayList<Task> myCurrentTasks;
     protected ArrayList<Task> myCompletedTasks;
+    //widgets
+    private Button mOpenDialog;
+    public TextView mInputDisplay;
+    private static final String TAG = "MainActivity";
+
+   // @Override
+    public void sendInput(String input) {
+        Log.d(TAG, "sendInput: got the input: " + input);
+
+//        mInputDisplay.setText(input);
+        mInput = input;
+
+        setInputToTextView();
+    }
+    //vars
+    public String mInput;
+
+    private void setInputToTextView(){
+        mInputDisplay.setText(mInput);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mOpenDialog = findViewById(R.id.open_dialog);
+        mInputDisplay = findViewById(R.id.input_display);
+
+        mOpenDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: opening dialog.");
+                myCustomDialog dialog = new myCustomDialog();
+                dialog.show(getFragmentManager(), "MyCustomDialog");
+
+            }
+        });
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.current_tasks);
         setSupportActionBar(toolbar);
