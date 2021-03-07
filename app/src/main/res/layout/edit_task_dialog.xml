@@ -19,18 +19,22 @@
             android:text="Your Custom Dialog Heading"
             android:textSize="18sp"
             android:textColor="#000"
-            android:id="@+id/heading"/>
+            android:id="@+id/dialogTitle"/>
 
-        <EditText
+        <TextView
+            android:id="@+id/dialogDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/heading"
-            android:layout_marginTop="20dp"
-            android:background="@null"
-            android:textColor="#000"
-            android:hint="enter some text..."
-            android:id="@+id/input"/>
-
+            android:layout_below="@id/dialogTitle"
+            android:layout_marginTop="12dp"
+            android:text="Date" />
+        <TextView
+            android:id="@+id/dialogCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/dialogDate"
+            android:layout_marginTop="12dp"
+            android:text="Category" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -52,6 +56,7 @@
             android:textSize="18sp"
             android:textColor="#33bbff"
             android:id="@+id/action_cancel"/>
+
 
     </RelativeLayout>
 

@@ -25,10 +25,11 @@ public class TasksListFrag extends Fragment {
 
     private ListView myList;
     private MainActivity myact;
-    private CurrentTaskAdapter adapter;
+    private TaskAdapter adapter;
     Context cntx;
+    private static final String TAG = "MainActivity";
 
-    public TasksListFrag(CurrentTaskAdapter adapter) {
+    public TasksListFrag(TaskAdapter adapter) {
         this.adapter = adapter;
     }
     @Override
@@ -52,8 +53,13 @@ public class TasksListFrag extends Fragment {
         // program a short click on the list item
         myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Snackbar.make(view, "Selected #" + id, Snackbar.LENGTH_SHORT)
-                        .setAction("Action", null).show();
+//                Snackbar.make(view, "Selected #" + id, Snackbar.LENGTH_SHORT)
+                       // .setAction("Action", null).show();
+                Log.d(TAG, "onClick: opening dialog.");
+                MyCustomDialog dialog = new MyCustomDialog();
+                dialog.task = (Task) parent.getItemAtPosition(position);
+                dialog.show(myact.getFragmentManager(), "MyCustomDialog");
+
             }
         });
 
@@ -93,7 +99,7 @@ public class TasksListFrag extends Fragment {
                 Toast.makeText(cntx, "job " + index + " deleted",
                         Toast.LENGTH_SHORT).show();
                 // refresh view
-                myact.currentTaskAdapter.notifyDataSetChanged();
+                myact.taskAdapter.notifyDataSetChanged();
                 return true;
             }
         }

@@ -11,18 +11,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-
-import static android.widget.Toast.LENGTH_SHORT;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -31,8 +25,8 @@ public class MainActivity extends AppCompatActivity
     private Fragment currentTasks;
     private Fragment completedTasks;
     private FragmentTransaction transaction;
-    protected CurrentTaskAdapter currentTaskAdapter;
-    protected CurrentTaskAdapter completedTaskAdapter;
+    protected TaskAdapter taskAdapter;
+    protected TaskAdapter completedTaskAdapter;
     protected Toolbar toolbar;
     protected ArrayList<Task> myCurrentTasks;
     protected ArrayList<Task> myCompletedTasks;
@@ -61,18 +55,18 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mOpenDialog = findViewById(R.id.open_dialog);
-        mInputDisplay = findViewById(R.id.input_display);
-
-        mOpenDialog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onClick: opening dialog.");
-                myCustomDialog dialog = new myCustomDialog();
-                dialog.show(getFragmentManager(), "MyCustomDialog");
-
-            }
-        });
+//        mOpenDialog = findViewById(R.id.open_dialog);
+//        mInputDisplay = findViewById(R.id.input_display);
+//
+//        mOpenDialog.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.d(TAG, "onClick: opening dialog.");
+//                MyCustomDialog dialog = new MyCustomDialog();
+//                dialog.show(getFragmentManager(), "MyCustomDialog");
+//
+//            }
+//        });
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.current_tasks);
         setSupportActionBar(toolbar);
@@ -81,8 +75,8 @@ public class MainActivity extends AppCompatActivity
         myCurrentTasks = new ArrayList<Task>();
         myCompletedTasks = new ArrayList<Task>();
         // make array adapter to bind arraylist to listview with custom item layout
-        currentTaskAdapter = new CurrentTaskAdapter(this, R.layout.task_layout, myCurrentTasks);
-        completedTaskAdapter = new CurrentTaskAdapter(this, R.layout.task_layout, myCompletedTasks);
+        taskAdapter = new TaskAdapter(this, R.layout.task_layout, myCurrentTasks);
+        completedTaskAdapter = new TaskAdapter(this, R.layout.task_layout, myCompletedTasks);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -90,7 +84,7 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         addTask = new AddTasksFrag();
-        currentTasks = new TasksListFrag(currentTaskAdapter);
+        currentTasks = new TasksListFrag(taskAdapter);
         completedTasks = new TasksListFrag(completedTaskAdapter);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_container, currentTasks).commit();

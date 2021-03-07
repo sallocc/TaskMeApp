@@ -21,44 +21,6 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer" />
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/activity_container">
-
-        <TextView
-            android:id="@+id/heading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="This is an Activity"
-            android:textColor="#000"
-            android:layout_marginTop="100sp"
-            android:textSize="18sp" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="open dialog"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/open_dialog"
-            android:layout_below="@+id/heading"
-            android:layout_marginTop="100sp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/input_display"
-            android:layout_below="@+id/open_dialog"
-            android:layout_marginTop="100dp"
-            android:layout_centerHorizontal="true"
-            android:textSize="15sp"
-            android:textColor="#000"/>
-
-
-
-    </RelativeLayout>
-
 
 </androidx.drawerlayout.widget.DrawerLayout>
 

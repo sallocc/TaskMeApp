@@ -17,7 +17,7 @@ import androidx.annotation.Nullable;
  * Created by User on 12/10/2017.
  */
 
-public class myCustomDialog extends DialogFragment {
+public class MyCustomDialog extends DialogFragment {
 
     private static final String TAG = "MyCustomDialog";
 
@@ -28,19 +28,27 @@ public class myCustomDialog extends DialogFragment {
     public OnInputListener mOnInputListener;
 
     //widgets
-    private EditText mInput;
-    private TextView mActionOk, mActionCancel;
+    private TextView mCategory;
+    private TextView mTitle;
+    private TextView mDate;
 
+    public Task task;
+    private TextView mActionOk, mActionCancel;
 
     //vars
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialog_my_custom, container, false);
+        View view = inflater.inflate(R.layout.edit_task_dialog, container, false);
         mActionCancel = view.findViewById(R.id.action_cancel);
         mActionOk = view.findViewById(R.id.action_ok);
-        mInput = view.findViewById(R.id.input);
+        mCategory = view.findViewById(R.id.dialogCategory);
+        mTitle = view.findViewById(R.id.dialogTitle);
+        mDate = view.findViewById(R.id.dialogDate);
+        mTitle.setText(task.getName());
+        mCategory.setText(task.getCategory());
+        mDate.setText(task.getDate());
 
         mActionCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,7 +64,7 @@ public class myCustomDialog extends DialogFragment {
             public void onClick(View v) {
                 Log.d(TAG, "onClick: capturing input");
 
-                String input = mInput.getText().toString();
+//                String input = mInput.getText().toString();
 //                if(!input.equals("")){
 //
 //                    //Easiest way: just set the value
@@ -65,7 +73,7 @@ public class myCustomDialog extends DialogFragment {
 //                }
 
                 //"Best Practice" but it takes longer
-                mOnInputListener.sendInput(input);
+//                mOnInputListener.sendInput(input);
 
                 getDialog().dismiss();
             }

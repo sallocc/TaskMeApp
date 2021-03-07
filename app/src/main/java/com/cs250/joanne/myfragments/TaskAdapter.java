@@ -10,11 +10,11 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class CurrentTaskAdapter extends ArrayAdapter<Task> {
+public class TaskAdapter extends ArrayAdapter<Task> {
 
     int resource;
 
-    public CurrentTaskAdapter(Context ctx, int res, List<Task> tasks)
+    public TaskAdapter(Context ctx, int res, List<Task> tasks)
     {
         super(ctx, res, tasks);
         resource = res;
