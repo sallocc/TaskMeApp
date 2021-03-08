@@ -22,4 +22,11 @@
         <item>Errand</item>
         <item>Miscellaneous</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="done_by_deadline">Done By Deadline</string>
+    <string name="done_after_deadline">Done After Deadline</string>
+    <string name="past_due">Past Due</string>
+    <string name="to_be_done">To Be Done</string>
+    <string name="total_tasks">Total Tasks</string>
 </resources>

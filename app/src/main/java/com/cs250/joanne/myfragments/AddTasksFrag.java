@@ -80,6 +80,9 @@ public class AddTasksFrag extends Fragment {
             public void onClick(View v) {
                 Task myTask = new Task(tv.getText().toString(), category.getText().toString(), date.getText().toString());
                 myact.myCurrentTasks.add(myTask);
+                int totalTasks = myact.myPrefs.getInt("totalTasks", 0);
+                myact.myPrefs.edit().putInt("totalTasks", totalTasks + 1).apply();
+
                 Collections.sort(myact.myCurrentTasks, new Comparator<Task>() {
                        @Override
                        public int compare(Task lhs, Task rhs) {

@@ -1,5 +1,6 @@
 package com.cs250.joanne.myfragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -10,6 +11,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,12 +26,15 @@ public class MainActivity extends AppCompatActivity
     private Fragment addTask;
     private Fragment currentTasks;
     private Fragment completedTasks;
+    private Fragment statsFrag;
     private FragmentTransaction transaction;
     protected TaskAdapter taskAdapter;
     protected TaskAdapter completedTaskAdapter;
     protected Toolbar toolbar;
     protected ArrayList<Task> myCurrentTasks;
     protected ArrayList<Task> myCompletedTasks;
+    protected SharedPreferences myPrefs;
+
     //widgets
     private Button mOpenDialog;
     public TextView mInputDisplay;
@@ -71,6 +76,18 @@ public class MainActivity extends AppCompatActivity
         toolbar.setTitle(R.string.current_tasks);
         setSupportActionBar(toolbar);
 
+        myPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        if (myPrefs.getInt("doneByDeadline", -1) == -1) {
+            SharedPreferences.Editor editor = myPrefs.edit();
+            editor.putInt("doneByDeadline", 0);
+            editor.putInt("doneAfterDeadline", 0);
+            editor.putInt("pastDue", 0);
+            editor.putInt("toBeDone", 0);
+            editor.putInt("totalTasks", 0);
+
+            editor.apply();
+        }
+
         // create ArrayList of items
         myCurrentTasks = new ArrayList<Task>();
         myCompletedTasks = new ArrayList<Task>();
@@ -86,6 +103,7 @@ public class MainActivity extends AppCompatActivity
         addTask = new AddTasksFrag();
         currentTasks = new TasksListFrag(taskAdapter);
         completedTasks = new TasksListFrag(completedTaskAdapter);
+        statsFrag = new StatsFrag();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_container, currentTasks).commit();
 
@@ -149,6 +167,13 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_manage) {
+            toolbar.setTitle("Statistics");
+            statsFrag = new StatsFrag();
+            transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_container, statsFrag);
+            transaction.addToBackStack(null);
+
+            transaction.commit();
 
         } else if (id == R.id.currenttasks_frag) {
             toolbar.setTitle(R.string.current_tasks);

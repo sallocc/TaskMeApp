@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -35,6 +36,7 @@ public class MyCustomDialog extends DialogFragment {
     public Task task;
     private TextView mActionOk, mActionCancel;
 
+
     //vars
 
     @Nullable
@@ -50,10 +52,13 @@ public class MyCustomDialog extends DialogFragment {
         mCategory.setText(task.getCategory());
         mDate.setText(task.getDate());
 
+        MainActivity myact = (MainActivity) getActivity();
+
         mActionCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: closing dialog");
+                //Change to complete task
                 getDialog().dismiss();
             }
         });

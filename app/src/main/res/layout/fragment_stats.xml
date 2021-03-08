@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".StatsFrag">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="50dp">
+        <TextView
+            android:id="@+id/done_by_deadline_number"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            />
+        <TextView
+            android:id="@+id/done_by_deadline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="@string/done_by_deadline" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="100dp">
+        <TextView
+            android:id="@+id/done_after_deadline_number"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            />
+        <TextView
+            android:id="@+id/done_after_deadline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="@string/done_after_deadline" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="150dp">
+        <TextView
+            android:id="@+id/past_due_number"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            />
+        <TextView
+            android:id="@+id/past_due"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="@string/past_due" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="200dp">
+        <TextView
+            android:id="@+id/to_be_done_number"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            />
+        <TextView
+            android:id="@+id/to_be_done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="@string/to_be_done" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="250dp">
+        <TextView
+            android:id="@+id/total_tasks_number"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            />
+        <TextView
+            android:id="@+id/total_tasks"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:text="@string/total_tasks" />
+    </LinearLayout>
+
+
+</FrameLayout>
