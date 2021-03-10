@@ -2,8 +2,10 @@ package com.cs250.joanne.myfragments;
 
 import android.app.DialogFragment;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 //import android.support.annotation.Nullable;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +13,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import androidx.annotation.Nullable;
+
+import java.lang.reflect.Type;
+import java.util.List;
 
 public class MyCustomDialog extends DialogFragment {
 
@@ -28,7 +35,7 @@ public class MyCustomDialog extends DialogFragment {
     private TextView mCategory;
     private TextView mTitle;
     private TextView mDate;
-    MainActivity mainActivity = ((MainActivity)getActivity());
+    //MainActivity mainActivity;
     public Task task;
     private TextView mActionCompleted, mActionCancel;
 
@@ -47,8 +54,7 @@ public class MyCustomDialog extends DialogFragment {
         mTitle.setText(task.getName());
         mCategory.setText(task.getCategory());
         mDate.setText(task.getDate());
-
-        MainActivity myact = (MainActivity) getActivity();
+        final MainActivity myact = (MainActivity) getActivity();
 
         mActionCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,22 +75,52 @@ public class MyCustomDialog extends DialogFragment {
 //                  if(!input.equals("")){
 //
 //                    //Easiest way: just set the value
-                   // mainActivity.mInputDisplay.setText(input);
-                if (mainActivity.myCompletedTasks != null) {
-                    mainActivity.myCompletedTasks.add(task);
-
+                // mainActivity.mInputDisplay.setText(input);
+                if (myact.myCompletedTasks != null) {
+                    myact.myCompletedTasks.add(task);
                 }
-                mainActivity.myCurrentTasks.remove(task);
-//                }
-
-                //"Best Practice" but it takes longer
-//                mOnInputListener.sendInput(input);
-
+                myact.taskAdapter.notifyDataSetChanged();
+                myact.myCurrentTasks.remove(task);
+                myact.completedTaskAdapter.notifyDataSetChanged();
+//                mainActivity.mString jsonCompletedTasks = gson.toJson(myCompletedTasks);yCurrentTasks.remove(task);
+////                }
                 getDialog().dismiss();
+
+
+//                Gson gson = new Gson();
+//                SharedPreferences sharedPref = myact.getPreferences(Context.MODE_PRIVATE);
+//                SharedPreferences.Editor editor = sharedPref.edit();
+//                String jsonCompletedTasks = gson.toJson(sharedPref.getString("CompletedTasks", ""));
+//                String jsonCurrentTasks = gson.toJson(sharedPref.getString("CurrentTasks", ""));
+//                Type type = new TypeToken<List<Task>>() {
+//                }.getType();
+//                List<Task> taskCompleted = gson.fromJson(jsonCompletedTasks, type);
+//                List<Task> taskCurrent = gson.fromJson(jsonCurrentTasks, type);
+//                taskCurrent.remove(new Task(mTitle.getText().toString(), mCategory.getText().toString(), mDate.getText().toString()));
+//                //added
+//                taskCompleted.add(new Task(mTitle.getText().toString(), mCategory.getText().toString(), mDate.getText().toString()));
+//                jsonCompletedTasks = gson.toJson(taskCompleted);
+//                jsonCurrentTasks = gson.toJson(taskCurrent);
+//                editor.putString("CompletedTasks", jsonCompletedTasks);
+//                editor.putString("CurrentTasks", jsonCurrentTasks);
+//                editor.apply();
+
+
+                // Task current = new Task(mTitle.getText().toString(),mCategory.getText().toString(),mDate.getText().toString());
+//                for (Task tasks : mainActivity.myCurrentTasks) {
+//                    if (tasks == current) {
+//                        mainActivity.myCurrentTasks.remove(current);
+//                    }
+                //          }
+                // String jsonText = mainActivity.myPrefs.getString("key", null);
+                // String[] text = gson.fromJson(jsonText, String[].class);  //EDIT: gso to gson
+
+
+                //       getDialog().dismiss();
             }
         });
 
-        return view;
+         return view;
     }
 
     @Override

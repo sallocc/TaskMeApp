@@ -20,6 +20,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -95,6 +97,7 @@ public class MainActivity extends AppCompatActivity
         Context context = this;
         SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
+
         editor.apply();
         // make array adapter to bind arraylist to listview with custom item layout
         taskAdapter = new TaskAdapter(this, R.layout.task_layout, myCurrentTasks);
@@ -106,6 +109,8 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         addTask = new AddTasksFrag();
+        taskAdapter.notifyDataSetChanged();
+        completedTaskAdapter.notifyDataSetChanged();
         currentTasks = new TasksListFrag(taskAdapter);
         completedTasks = new TasksListFrag(completedTaskAdapter);
         statsFrag = new StatsFrag();

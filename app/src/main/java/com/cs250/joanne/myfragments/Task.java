@@ -24,7 +24,16 @@ public class Task {
     public String getCategory() { return taskCategory; }
 
     public String getDate() { return taskDate; }
-
+    public boolean equals(Object taskOther) {
+        if (taskOther == this) {
+            return true;
+        }
+        if (!(taskOther instanceof Task)) {
+            return false;
+        }
+        Task o = (Task) taskOther;
+        return (this.taskName.equals(o.taskName) && this.taskCategory.equals(o.taskCategory) && this.taskDate.equals(o.taskDate));
+    }
     public Date getDateObject() {
         try {
             return new SimpleDateFormat("MM/dd/yyyy").parse(taskDate);
