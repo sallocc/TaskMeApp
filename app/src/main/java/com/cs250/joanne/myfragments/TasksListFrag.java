@@ -21,7 +21,8 @@ import com.google.android.material.snackbar.Snackbar;
 public class TasksListFrag extends Fragment {
 
     public static final int MENU_ITEM_EDITVIEW = Menu.FIRST;
-    public static final int MENU_ITEM_DELETE = Menu.FIRST + 1;
+    public static final int MENU_ITEM_COPY = Menu.FIRST + 1;
+    public static final int MENU_ITEM_DELETE = Menu.FIRST + 2;
 
     private ListView myList;
     private MainActivity myact;
@@ -76,6 +77,7 @@ public class TasksListFrag extends Fragment {
 
         // Add menu items
         menu.add(0, MENU_ITEM_EDITVIEW, 0, R.string.menu_editview);
+        menu.add(0, MENU_ITEM_COPY, 0, R.string.menu_copy);
         menu.add(0, MENU_ITEM_DELETE, 0, R.string.menu_delete);
     }
 
@@ -93,6 +95,15 @@ public class TasksListFrag extends Fragment {
                 Toast.makeText(cntx, "edit request",
                         Toast.LENGTH_SHORT).show();
                 return false;
+            }
+            case MENU_ITEM_COPY: {
+                Toast.makeText(cntx, "copying task", Toast.LENGTH_SHORT).show();
+                Task copyTask = myact.myCurrentTasks.get(index);
+                Task newTask = new Task(copyTask.getName() + " (copy)", copyTask.getCategory(), copyTask.getDate());
+                myact.myCurrentTasks.add(newTask);
+                myact.taskAdapter.notifyDataSetChanged();
+
+                return true;
             }
             case MENU_ITEM_DELETE: {
                 myact.myCurrentTasks.remove(index);
