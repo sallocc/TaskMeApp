@@ -14,10 +14,6 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-/**
- * Created by User on 12/10/2017.
- */
-
 public class MyCustomDialog extends DialogFragment {
 
     private static final String TAG = "MyCustomDialog";
@@ -32,9 +28,9 @@ public class MyCustomDialog extends DialogFragment {
     private TextView mCategory;
     private TextView mTitle;
     private TextView mDate;
-
+    MainActivity mainActivity = ((MainActivity)getActivity());
     public Task task;
-    private TextView mActionOk, mActionCancel;
+    private TextView mActionCompleted, mActionCancel;
 
 
     //vars
@@ -44,7 +40,7 @@ public class MyCustomDialog extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.edit_task_dialog, container, false);
         mActionCancel = view.findViewById(R.id.action_cancel);
-        mActionOk = view.findViewById(R.id.action_ok);
+        mActionCompleted = view.findViewById(R.id.action_completed);
         mCategory = view.findViewById(R.id.dialogCategory);
         mTitle = view.findViewById(R.id.dialogTitle);
         mDate = view.findViewById(R.id.dialogDate);
@@ -64,17 +60,21 @@ public class MyCustomDialog extends DialogFragment {
         });
 
 
-        mActionOk.setOnClickListener(new View.OnClickListener() {
+        mActionCompleted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: capturing input");
 
 //                String input = mInput.getText().toString();
-//                if(!input.equals("")){
+//                  if(!input.equals("")){
 //
 //                    //Easiest way: just set the value
-//                    ((MainActivity)getActivity()).mInputDisplay.setText(input);
-//
+                   // mainActivity.mInputDisplay.setText(input);
+                if (mainActivity.myCompletedTasks != null) {
+                    mainActivity.myCompletedTasks.add(task);
+
+                }
+                mainActivity.myCurrentTasks.remove(task);
 //                }
 
                 //"Best Practice" but it takes longer

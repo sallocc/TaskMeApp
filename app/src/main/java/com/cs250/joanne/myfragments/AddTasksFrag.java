@@ -1,6 +1,7 @@
 package com.cs250.joanne.myfragments;
 
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -20,9 +21,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 
 import static android.widget.Toast.LENGTH_SHORT;
 
@@ -38,7 +41,8 @@ public class AddTasksFrag extends Fragment {
     private Button dateButton;
     private MainActivity myact;
     Context context;
-
+    final static Calendar c = Calendar.getInstance();
+    ;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -83,6 +87,7 @@ public class AddTasksFrag extends Fragment {
                 int totalTasks = myact.myPrefs.getInt("totalTasks", 0);
                 myact.myPrefs.edit().putInt("totalTasks", totalTasks + 1).apply();
 
+
                 Collections.sort(myact.myCurrentTasks, new Comparator<Task>() {
                        @Override
                        public int compare(Task lhs, Task rhs) {
@@ -111,10 +116,10 @@ public class AddTasksFrag extends Fragment {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             // Use the current date as the default date in the picker
-            final Calendar c = Calendar.getInstance();
             int year = c.get(Calendar.YEAR);
             int month = c.get(Calendar.MONTH);
             int day = c.get(Calendar.DAY_OF_MONTH);
+           // today = calendar.getTime();
 
             // Create a new instance of DatePickerDialog and return it
             return new DatePickerDialog(getActivity(), this, year, month, day);
@@ -122,8 +127,27 @@ public class AddTasksFrag extends Fragment {
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
             date.setText((month + 1) + "/" + day + "/" + year);
+            populateSetDate(year, month, day);
         }
-    }
+
+        public void populateSetDate(int year, int month, int day) {
+
+            c.set(Calendar.YEAR, year);
+            c.set(Calendar.MONTH, month);
+            c.set(Calendar.DAY_OF_MONTH, day);
+            Date time = c.getTime();
+
+
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            String formattedDate = df.format(c.getTime());
+
+            date.setText(formattedDate);
+        }
+
+
+
+
+        }
 
 
 }

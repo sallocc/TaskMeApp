@@ -1,5 +1,6 @@
 package com.cs250.joanne.myfragments;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -91,6 +92,10 @@ public class MainActivity extends AppCompatActivity
         // create ArrayList of items
         myCurrentTasks = new ArrayList<Task>();
         myCompletedTasks = new ArrayList<Task>();
+        Context context = this;
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.apply();
         // make array adapter to bind arraylist to listview with custom item layout
         taskAdapter = new TaskAdapter(this, R.layout.task_layout, myCurrentTasks);
         completedTaskAdapter = new TaskAdapter(this, R.layout.task_layout, myCompletedTasks);
@@ -106,7 +111,8 @@ public class MainActivity extends AppCompatActivity
         statsFrag = new StatsFrag();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_container, currentTasks).commit();
-
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_container, completedTasks).commit();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
