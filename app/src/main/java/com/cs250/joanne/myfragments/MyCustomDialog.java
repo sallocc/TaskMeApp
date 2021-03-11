@@ -127,7 +127,7 @@ public class MyCustomDialog extends DialogFragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            mOnInputListener = (OnInputListener) getActivity();
+            //mOnInputListener = (OnInputListener) getActivity();
         } catch (ClassCastException e) {
             Log.e(TAG, "onAttach: ClassCastException: " + e.getMessage());
         }
