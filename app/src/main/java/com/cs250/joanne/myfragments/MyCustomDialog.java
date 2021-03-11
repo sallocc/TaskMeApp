@@ -66,6 +66,11 @@ public class MyCustomDialog extends DialogFragment {
         });
 
 
+        if (myact.toolbar.getTitle().toString().equals("Current Tasks")) {
+            //Create normal button.
+        } else {
+            //Create disabled button that just shows the date completed
+        }
         mActionCompleted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
