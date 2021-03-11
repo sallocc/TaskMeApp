@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/TaskMeApp.iml" filepath="$PROJECT_DIR$/.idea/modules/TaskMeApp.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/TaskMeApp.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/TaskMeApp.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FragListApp.iml" filepath="$PROJECT_DIR$/.idea/modules/FragListApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/FragListApp.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/FragListApp.app.iml" />
     </modules>
   </component>
 </project>

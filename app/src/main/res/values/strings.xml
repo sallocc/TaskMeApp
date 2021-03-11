@@ -32,5 +32,6 @@
     <string name="total_tasks">Total Tasks</string>
 //    <string name="completed_tasks1">Completed task</string>
     //    <string name="current_tasks1">Current task</string>
+    <string name="cancel">Cancel</string>
 
 </resources>
