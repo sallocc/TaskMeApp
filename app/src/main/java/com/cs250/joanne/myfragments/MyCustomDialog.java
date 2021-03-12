@@ -1,5 +1,6 @@
 package com.cs250.joanne.myfragments;
 
+import android.annotation.SuppressLint;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -19,11 +20,14 @@ import com.google.gson.reflect.TypeToken;
 import androidx.annotation.Nullable;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MyCustomDialog extends DialogFragment {
 
     private static final String TAG = "MyCustomDialog";
+    ArrayList<Task> array;
+
 
     public interface OnInputListener {
         void sendInput(String input);
@@ -32,16 +36,16 @@ public class MyCustomDialog extends DialogFragment {
     public OnInputListener mOnInputListener;
 
     //widgets
-    private TextView mCategory;
-    private TextView mTitle;
-    private TextView mDate;
+    private TextView mCategory, mTitle, mDate, mActionCancel, mDoneDate;
+    private Button mActionCompleted;
     //MainActivity mainActivity;
     public Task task;
-    private TextView mActionCompleted, mActionCancel;
-
+    protected boolean isCompleted = false;
 
     //vars
-
+//    public MyCustomDialog(ArrayList<Task> myCurrentTasks) {
+//        array = myCurrentTasks;
+//    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -51,9 +55,11 @@ public class MyCustomDialog extends DialogFragment {
         mCategory = view.findViewById(R.id.dialogCategory);
         mTitle = view.findViewById(R.id.dialogTitle);
         mDate = view.findViewById(R.id.dialogDate);
+        mDoneDate = view.findViewById(R.id.dialogDoneDate);
         mTitle.setText(task.getName());
         mCategory.setText(task.getCategory());
         mDate.setText(task.getDate());
+        mDoneDate.setText(task.getDoneDate());
         final MainActivity myact = (MainActivity) getActivity();
 
         mActionCancel.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +71,13 @@ public class MyCustomDialog extends DialogFragment {
             }
         });
 
+        if (isCompleted) {
+            // hide mark completed button
+            mActionCompleted.setVisibility(View.GONE);
+        } else {
+            // hide done date
+            mDoneDate.setVisibility(View.GONE);
+        }
 
         mActionCompleted.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,11 +89,13 @@ public class MyCustomDialog extends DialogFragment {
 //
 //                    //Easiest way: just set the value
                 // mainActivity.mInputDisplay.setText(input);
+                task.setDone();
                 if (myact.myCompletedTasks != null) {
                     myact.myCompletedTasks.add(task);
                 }
                 myact.taskAdapter.notifyDataSetChanged();
                 myact.myCurrentTasks.remove(task);
+
                 myact.completedTaskAdapter.notifyDataSetChanged();
 //                mainActivity.mString jsonCompletedTasks = gson.toJson(myCompletedTasks);yCurrentTasks.remove(task);
 ////                }

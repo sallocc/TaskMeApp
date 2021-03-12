@@ -23,15 +23,16 @@ public class TasksListFrag extends Fragment {
     public static final int MENU_ITEM_EDITVIEW = Menu.FIRST;
     public static final int MENU_ITEM_COPY = Menu.FIRST + 1;
     public static final int MENU_ITEM_DELETE = Menu.FIRST + 2;
-
+    boolean isCompleted;
     private ListView myList;
     private MainActivity myact;
     private TaskAdapter adapter;
     Context cntx;
     private static final String TAG = "MainActivity";
 
-    public TasksListFrag(TaskAdapter adapter) {
+    public TasksListFrag(TaskAdapter adapter, boolean isCompleted) {
         this.adapter = adapter;
+        this.isCompleted = isCompleted;
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,10 +58,12 @@ public class TasksListFrag extends Fragment {
 //                Snackbar.make(view, "Selected #" + id, Snackbar.LENGTH_SHORT)
                        // .setAction("Action", null).show();
                 Log.d(TAG, "onClick: opening dialog.");
+              //  if MyCustomDialog.
+
                 MyCustomDialog dialog = new MyCustomDialog();
                 dialog.task = (Task) parent.getItemAtPosition(position);
+                dialog.isCompleted = isCompleted;
                 dialog.show(myact.getFragmentManager(), "MyCustomDialog");
-
             }
         });
 

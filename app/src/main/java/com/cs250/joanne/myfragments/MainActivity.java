@@ -111,8 +111,8 @@ public class MainActivity extends AppCompatActivity
         addTask = new AddTasksFrag();
         taskAdapter.notifyDataSetChanged();
         completedTaskAdapter.notifyDataSetChanged();
-        currentTasks = new TasksListFrag(taskAdapter);
-        completedTasks = new TasksListFrag(completedTaskAdapter);
+        currentTasks = new TasksListFrag(taskAdapter,false);
+        completedTasks = new TasksListFrag(completedTaskAdapter,true);
         statsFrag = new StatsFrag();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_container, currentTasks).commit();
