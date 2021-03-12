@@ -45,7 +45,7 @@ public class TasksListFrag extends Fragment {
         cntx = getActivity().getApplicationContext();
 
         myact = (MainActivity) getActivity();
-        myList = (ListView) myview.findViewById(R.id.mylist);
+        myList = myview.findViewById(R.id.mylist);
         // connect listview to the array adapter in MainActivity
 
         myList.setAdapter(adapter);
