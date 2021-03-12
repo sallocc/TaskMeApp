@@ -129,9 +129,20 @@ public class AddTasksFrag extends Fragment {
                 myact.taskAdapter.notifyDataSetChanged();
                 myact.completedTaskAdapter.notifyDataSetChanged();
                 int totalTasks = myact.myPrefs.getInt("totalTasks", 0);
-                //If we are editing a task instead of adding
-                if (index != -1) {
+                //If we are adding a task instead of editing
+                if (index == -1) {
                     myact.myPrefs.edit().putInt("totalTasks", totalTasks + 1).apply();
+                    //update stats
+                    Date currentDate = new Date();
+                    if (myTask.getDateObject().compareTo(currentDate) < 0) {
+                        //update past due
+                        int pastDue = myact.myPrefs.getInt("pastDue", 0);
+                        myact.myPrefs.edit().putInt("pastDue", pastDue + 1).apply();
+                    } else {
+                        //update to be done
+                        int toBeDone = myact.myPrefs.getInt("toBeDone", 0);
+                        myact.myPrefs.edit().putInt("toBeDone", toBeDone + 1).apply();
+                    }
                 }
 
 

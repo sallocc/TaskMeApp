@@ -20,7 +20,10 @@ import com.google.gson.reflect.TypeToken;
 import androidx.annotation.Nullable;
 
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class MyCustomDialog extends DialogFragment {
@@ -79,11 +82,6 @@ public class MyCustomDialog extends DialogFragment {
             mDoneDate.setVisibility(View.GONE);
         }
 
-        if (myact.toolbar.getTitle().toString().equals("Current Tasks")) {
-            //Create normal button.
-        } else {
-            //Create disabled button that just shows the date completed
-        }
         mActionCompleted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,6 +93,16 @@ public class MyCustomDialog extends DialogFragment {
 //                    //Easiest way: just set the value
                 // mainActivity.mInputDisplay.setText(input);
                 task.setDone();
+                Date currentDate = new Date();
+                if (task.getDateObject().compareTo(currentDate) < 0) {
+                    //update past due
+                    int doneAfterDeadline = myact.myPrefs.getInt("doneAfterDeadline", 0);
+                    myact.myPrefs.edit().putInt("doneAfterDeadline", doneAfterDeadline + 1).apply();
+                } else {
+                    //update to be done
+                    int doneByDeadline = myact.myPrefs.getInt("doneByDeadline", 0);
+                    myact.myPrefs.edit().putInt("doneByDeadline", doneByDeadline + 1).apply();
+                }
                 if (myact.myCompletedTasks != null) {
                     myact.myCompletedTasks.add(task);
                 }
