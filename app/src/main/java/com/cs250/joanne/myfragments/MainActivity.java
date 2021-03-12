@@ -26,11 +26,11 @@ import java.util.Set;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Fragment addTask;
-    private Fragment currentTasks;
+    protected Fragment addTask;
+    protected Fragment currentTasks;
     private Fragment completedTasks;
     private Fragment statsFrag;
-    private FragmentTransaction transaction;
+    protected FragmentTransaction transaction;
     protected TaskAdapter taskAdapter;
     protected TaskAdapter completedTaskAdapter;
     protected Toolbar toolbar;
@@ -90,6 +90,10 @@ public class MainActivity extends AppCompatActivity
 
             editor.apply();
         }
+        if (myPrefs.getInt("taskIndex", -1) != -1 ||
+                !myPrefs.getString("taskCompletion", "current").equals("current")) {
+            myPrefs.edit().putInt("taskIndex", -1).putString("taskCompletion", "current").apply();
+        }
 
         // create ArrayList of items
         myCurrentTasks = new ArrayList<Task>();
@@ -116,8 +120,8 @@ public class MainActivity extends AppCompatActivity
         statsFrag = new StatsFrag();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_container, currentTasks).commit();
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_container, completedTasks).commit();
+        //getSupportFragmentManager().beginTransaction()
+                //.add(R.id.fragment_container, completedTasks).commit();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 

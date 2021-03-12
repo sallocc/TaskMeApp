@@ -4,6 +4,7 @@ package com.cs250.joanne.myfragments;
 import android.content.Context;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -92,28 +93,44 @@ public class TasksListFrag extends Fragment {
         menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         int index = menuInfo.position; // position in array adapter
 
+
         switch (item.getItemId()) {
             case MENU_ITEM_EDITVIEW: {
 
                 Toast.makeText(cntx, "edit request",
                         Toast.LENGTH_SHORT).show();
-                return false;
+                myact.transaction = myact.getSupportFragmentManager().beginTransaction();
+
+// Replace whatever is in the fragment_container view with this fragment,
+// and add the transaction to the back stack so the user can navigate back
+                myact.transaction.replace(R.id.fragment_container, myact.addTask);
+                myact.transaction.addToBackStack(null);
+
+// Commit the transaction
+                myact.transaction.commit();
+
+                //Add reference to Task for edit task
+                String completion = myact.toolbar.getTitle().toString().equals("Current Tasks") ? "current": "completed";
+                myact.myPrefs.edit().putInt("taskIndex", index).putString("taskCompletion", completion).apply();
+                return true;
             }
             case MENU_ITEM_COPY: {
                 Toast.makeText(cntx, "copying task", Toast.LENGTH_SHORT).show();
-                Task copyTask = myact.myCurrentTasks.get(index);
+                Task copyTask = myact.toolbar.getTitle().equals("Current Tasks")? myact.myCurrentTasks.get(index): myact.myCompletedTasks.get(index);
                 Task newTask = new Task(copyTask.getName() + " (copy)", copyTask.getCategory(), copyTask.getDate());
                 myact.myCurrentTasks.add(newTask);
                 myact.taskAdapter.notifyDataSetChanged();
+                myact.completedTaskAdapter.notifyDataSetChanged();
 
                 return true;
             }
             case MENU_ITEM_DELETE: {
-                myact.myCurrentTasks.remove(index);
+                Task removed = myact.toolbar.getTitle().equals("Current Tasks") ? myact.myCurrentTasks.remove(index): myact.myCompletedTasks.remove(index);
                 Toast.makeText(cntx, "job " + index + " deleted",
                         Toast.LENGTH_SHORT).show();
                 // refresh view
                 myact.taskAdapter.notifyDataSetChanged();
+                myact.completedTaskAdapter.notifyDataSetChanged();
                 return true;
             }
         }

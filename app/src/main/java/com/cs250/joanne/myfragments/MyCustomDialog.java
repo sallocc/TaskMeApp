@@ -79,6 +79,11 @@ public class MyCustomDialog extends DialogFragment {
             mDoneDate.setVisibility(View.GONE);
         }
 
+        if (myact.toolbar.getTitle().toString().equals("Current Tasks")) {
+            //Create normal button.
+        } else {
+            //Create disabled button that just shows the date completed
+        }
         mActionCompleted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -142,7 +147,7 @@ public class MyCustomDialog extends DialogFragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            mOnInputListener = (OnInputListener) getActivity();
+            //mOnInputListener = (OnInputListener) getActivity();
         } catch (ClassCastException e) {
             Log.e(TAG, "onAttach: ClassCastException: " + e.getMessage());
         }

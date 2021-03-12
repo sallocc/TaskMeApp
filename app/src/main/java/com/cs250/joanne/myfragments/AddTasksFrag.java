@@ -9,6 +9,8 @@ import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -39,6 +42,7 @@ public class AddTasksFrag extends Fragment {
 
     private Button btn;
     private Button dateButton;
+    private Button cancel;
     private MainActivity myact;
     Context context;
     final static Calendar c = Calendar.getInstance();
@@ -72,29 +76,82 @@ public class AddTasksFrag extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                category.setText(parent.getItemAtPosition(5).toString());
+                category.setText(parent.getItemAtPosition(4).toString());
             }
         });
 
+        cancel = (Button) view.findViewById(R.id.cancel_btn);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Reset metadata
+                myact.myPrefs.edit().putInt("taskIndex", -1).putString("taskCompletion", "current").apply();
 
+                Toast.makeText(getActivity().getApplicationContext(), "Update cancelled", LENGTH_SHORT).show();
+                myact.toolbar.setTitle(R.string.current_tasks);
+                myact.transaction = myact.getSupportFragmentManager().beginTransaction();
+                myact.transaction.replace(R.id.fragment_container, myact.currentTasks);
+                myact.transaction.addToBackStack(null);
+
+// Commit the transaction
+                myact.transaction.commit();
+            }
+        });
 
         btn = (Button) view.findViewById(R.id.add_btn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Task myTask = new Task(tv.getText().toString(), category.getText().toString(), date.getText().toString());
-                myact.myCurrentTasks.add(myTask);
+                //Add error handling for form
+                String taskName = tv.getText().toString();
+                String taskDate = date.getText().toString();
+                if (taskName.length() < 1) {
+                    Toast.makeText(context, "Please enter a task name",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (taskDate.equals("00/00/00")) {
+                    Toast.makeText(context, "Please choose a date",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                ArrayList<Task> taskList = myact.myPrefs.getString("taskCompletion", "current").equals("current") ?
+                        myact.myCurrentTasks: myact.myCompletedTasks;
+                //Grab index metadata if possible, otherwise make new task
+                int index = myact.myPrefs.getInt("taskIndex", -1);
+                Task myTask = index == -1 ?
+                        new Task(tv.getText().toString(), category.getText().toString(), date.getText().toString()):
+                        taskList.remove(index);
+                myTask.setName(tv.getText().toString());
+                myTask.setTaskCategory(category.getText().toString());
+                myTask.setTaskDate(date.getText().toString());
+                taskList.add(myTask);
+                myact.taskAdapter.notifyDataSetChanged();
+                myact.completedTaskAdapter.notifyDataSetChanged();
                 int totalTasks = myact.myPrefs.getInt("totalTasks", 0);
-                myact.myPrefs.edit().putInt("totalTasks", totalTasks + 1).apply();
+                //If we are editing a task instead of adding
+                if (index != -1) {
+                    myact.myPrefs.edit().putInt("totalTasks", totalTasks + 1).apply();
+                }
 
 
-                Collections.sort(myact.myCurrentTasks, new Comparator<Task>() {
+                Collections.sort(taskList, new Comparator<Task>() {
                        @Override
                        public int compare(Task lhs, Task rhs) {
                            return lhs.getDateObject().compareTo(rhs.getDateObject());
                        }
                 });
+                //Reset metadata
+                myact.myPrefs.edit().putInt("taskIndex", -1).putString("taskCompletion", "current").apply();
+
                 Toast.makeText(getActivity().getApplicationContext(), "added task", LENGTH_SHORT).show();
+                myact.toolbar.setTitle(R.string.current_tasks);
+                myact.transaction = myact.getSupportFragmentManager().beginTransaction();
+                myact.transaction.replace(R.id.fragment_container, myact.currentTasks);
+                myact.transaction.addToBackStack(null);
+
+// Commit the transaction
+                myact.transaction.commit();
             }
         });
 
@@ -109,6 +166,38 @@ public class AddTasksFrag extends Fragment {
 
         return view;
     }
+
+    // Called at the start of the visible lifetime.
+    @Override
+    public void onStart(){
+        super.onStart();
+        Log.d ("Other Fragment2", "onStart");
+        // Apply any required UI change now that the Fragment is visible.
+        int index = myact.myPrefs.getInt("taskIndex", -1);
+        ArrayList<Task> taskList = myact.myPrefs.getString("taskCompletion", "current").equals("current") ?
+                myact.myCurrentTasks: myact.myCompletedTasks;
+        System.out.println("This edit came from a task that is " + myact.myPrefs.getString("taskCompletion", "current"));
+        Task myTask = index == -1 ? new Task("", "miscellaneous", "00/00/00"):
+                taskList.get(index);
+        tv.setText(myTask.getName());
+        category.setText(myTask.getCategory());
+        date.setText(myTask.getDate());
+
+    }
+
+    // Called at the end of the active lifetime.
+    @Override
+    public void onPause(){
+        Log.d ("Other Fragment", "onPause");
+        // Suspend UI updates, threads, or CPU intensive processes
+        // that don't need to be updated when the Activity isn't
+        // the active foreground activity.
+        // Persist all edits or state changes
+        // as after this call the process is likely to be killed.
+        myact.myPrefs.edit().putInt("taskIndex", -1).putString("taskCompletion", "current").apply();
+        super.onPause();
+    }
+
 
     public static class DatePickerFragment extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
@@ -138,7 +227,7 @@ public class AddTasksFrag extends Fragment {
             Date time = c.getTime();
 
 
-            @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
             String formattedDate = df.format(c.getTime());
 
             date.setText(formattedDate);
