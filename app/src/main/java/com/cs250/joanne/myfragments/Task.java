@@ -16,13 +16,9 @@ public class Task {
     private String taskName;
     private String taskCategory;
     private String taskDate;
-<<<<<<< HEAD
     private String taskDone;
 //    Boolean isCompleted = false;
-=======
     private boolean completed;
-
->>>>>>> d2b2dff78924f4f61b1cc46c4a5800a80a871d13
     Task(String title, String category, String date) {
         this.taskName = title;
         this.taskCategory = category;
@@ -40,11 +36,8 @@ public class Task {
 
     public String getDate() { return taskDate; }
 
-<<<<<<< HEAD
     public String getDoneDate() { return taskDone; }
 
-=======
->>>>>>> d2b2dff78924f4f61b1cc46c4a5800a80a871d13
     public boolean equals(Object taskOther) {
         if (taskOther == this) {
             return true;
@@ -55,7 +48,6 @@ public class Task {
         Task o = (Task) taskOther;
         return (this.taskName.equals(o.taskName) && this.taskCategory.equals(o.taskCategory) && this.taskDate.equals(o.taskDate));
     }
-<<<<<<< HEAD
     public void setDone() {
         Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
@@ -63,9 +55,6 @@ public class Task {
         int day = c.get(Calendar.DAY_OF_MONTH);
         taskDone = (month + 1) + "/" + day + "/" + year;
     }
-=======
-
->>>>>>> d2b2dff78924f4f61b1cc46c4a5800a80a871d13
     public Date getDateObject() {
         try {
             return new SimpleDateFormat("MM/dd/yyyy").parse(taskDate);
