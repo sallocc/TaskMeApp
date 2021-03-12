@@ -62,7 +62,8 @@ public class MyCustomDialog extends DialogFragment {
         mTitle.setText(task.getName());
         mCategory.setText(task.getCategory());
         mDate.setText(task.getDate());
-        mDoneDate.setText(task.getDoneDate());
+        String doneString = "Done on: " + task.getDoneDate();
+        mDoneDate.setText(doneString);
         final MainActivity myact = (MainActivity) getActivity();
 
         mActionCancel.setOnClickListener(new View.OnClickListener() {

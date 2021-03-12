@@ -122,6 +122,9 @@ public class TasksListFrag extends Fragment {
                 myact.taskAdapter.notifyDataSetChanged();
                 myact.completedTaskAdapter.notifyDataSetChanged();
 
+                int taskNum = myact.myPrefs.getInt("totalTasks", 0);
+                myact.myPrefs.edit().putInt("totalTasks", taskNum + 1).apply();
+
                 return true;
             }
             case MENU_ITEM_DELETE: {
